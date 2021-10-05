@@ -1,22 +1,21 @@
 public class Application {
     public static void main(String[] args) {
-        TechnicalTaskProducer technicalTaskProducer = new TechnicalTaskProducer();
-        Delivery delivery = new Delivery();
-        Employee employee = new Employee();
-        IssueManager issueManager = new IssueManager();
-        Manager manager = new Manager();
-        Client client = new Client("Alex");
+        YogurtMediator mediator = new YogurtMediator();
 
-        Mediator mediator = new Mediator(client,technicalTaskProducer,manager,issueManager,employee,delivery);
+        OrderManager orderManager = new OrderManager(mediator, new Order(1560L));
+        TechnicalTaskProducer technicalTask = new TechnicalTaskProducer(mediator);
+        DeliveryEmployee deliveryEmployee = new DeliveryEmployee(mediator);
+        PackEmployee packer = new PackEmployee(mediator);
+        StorageInspector storageInspector = new StorageInspector(mediator);
+        CreateEmployee createEmployee = new CreateEmployee(mediator);
 
-        client.setMediator(mediator);
-        technicalTaskProducer.setMediator(mediator);
-        manager.setMediator(mediator);
-        issueManager.setMediator(mediator);
-        employee.setMediator(mediator);
+        mediator.setOrderManager(orderManager);
+        mediator.setTechnicalTaskProducer(technicalTask);
+        mediator.setDeliveryEmployee(deliveryEmployee);
+        mediator.setPackEmployee(packer);
+        mediator.setStorageInspector(storageInspector);
+        mediator.setCreateEmployee(createEmployee);
 
-        client.createOrder(100L);
-
-
+        orderManager.crateOrder();
     }
 }

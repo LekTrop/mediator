@@ -1,18 +1,21 @@
-public class TechnicalTaskProducer {
+public class TechnicalTaskProducer extends AbstractYogurtFactory {
 
-    private Mediator mediator;
-
-    public TechnicalTask createTechnicalTask(){
-        System.out.println("create task");
-        mediator.sendCheckerNotification();
-        return new TechnicalTask();
+    public void createTechnicalTask(Order order) {
+        if(order.getPrice() < PriceRules.MIN_COUNT_OF_ORDER_PRICE){
+            throw new IllegalStateException("Sry but we cannot ");
+        }
+        yogurtMediator.send("Create TechnicalTask", this);
     }
 
-    public Mediator getMediator() {
-        return mediator;
+    public TechnicalTaskProducer(YogurtMediator yogurtMediator) {
+        super(yogurtMediator);
     }
 
-    public void setMediator(Mediator mediator) {
-        this.mediator = mediator;
+    public YogurtMediator getYogurtMediator() {
+        return yogurtMediator;
+    }
+
+    public void setYogurtMediator(YogurtMediator yogurtMediator) {
+        this.yogurtMediator = yogurtMediator;
     }
 }
